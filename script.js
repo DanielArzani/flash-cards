@@ -1,16 +1,20 @@
 // @ts-check
 (() => {
+  initEventListeners();
+})();
+
+/**
+ * Initializes event listeners on page load
+ */
+function initEventListeners() {
   const newCardButton = document.querySelector('.new-card-btn');
 
-  // WHEN USER CLICKS CREATE NEW CARD BUTTON, OPEN MODAL
   if (newCardButton instanceof HTMLButtonElement) {
     newCardButton.addEventListener('click', createNewCard);
   } else {
-    console.error('The clicked on element is not a button');
+    console.error('The clicked element is not a button');
   }
-
-  // CREATE THE NEW CARD
-})();
+}
 
 /**
  * Opens a specified modal
@@ -23,6 +27,8 @@ function openModal(modalID) {
 
   if (modal instanceof HTMLDivElement) {
     modal.classList.remove('hidden');
+  } else {
+    console.error(`Modal with ID ${modalID} not found.`);
   }
 }
 
@@ -35,15 +41,16 @@ function openModal(modalID) {
  */
 function closeModal(modalID, formID) {
   const modal = document.querySelector(`#${modalID}`);
-  const form = document.querySelector(`#${formID}`);
+  const form = formID ? document.querySelector(`#${formID}`) : null;
 
-  // if this modal has a form, its input fields will be reset
   if (form instanceof HTMLFormElement) {
     form.reset();
   }
 
   if (modal instanceof HTMLDivElement) {
     modal.classList.add('hidden');
+  } else {
+    console.error(`Modal with ID ${modalID} not found.`);
   }
 }
 
@@ -63,5 +70,7 @@ function createNewCard() {
       },
       { once: true }
     );
+  } else {
+    console.error('Close button not found or is not a button.');
   }
 }
