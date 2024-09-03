@@ -26,10 +26,6 @@ A customizable flash card app leveraging spaced repetition to optimize long-term
 - As a user, I can review cards in a selected deck using spaced repetition.
 - As a user, I can mark my answer as correct or incorrect to adjust the review interval.
 
-## Notes
-
-- Use [this site](https://frontendmasters.com/blog/patterns-for-memory-efficient-dom-manipulation/) as a reference for faster DOM manipulation.
-
 ## Future Improvements
 
 - Add support for syncing data across devices.
@@ -39,5 +35,7 @@ A customizable flash card app leveraging spaced repetition to optimize long-term
 ## Contributing
 
 - [Every Layout](https://every-layout.dev/) by Andy Bell and Heydon Pickering
+
+- [This](https://frontendmasters.com/blog/patterns-for-memory-efficient-dom-manipulation/) site as a reference for faster DOM manipulation.
 
 ---
