@@ -2,9 +2,13 @@
 //-----------------------------------------------------------------------------------------
 //                                      SCRIPT
 //-----------------------------------------------------------------------------------------
+// Loading data from localStorage
+const allDecks = [];
+const allCards = [];
 
-// Scopes all variables on page so that they don't become global (except functions)
+// For scoping variables
 (() => {
+  loadAllDecks();
   initEventListeners();
 })();
 
@@ -26,6 +30,7 @@ function initEventListeners() {
     console.error('The clicked on element is not a button');
   }
 
+  // allows the user to close the new card modal without submitting it
   if (closeNewCardModalButton instanceof HTMLButtonElement) {
     closeNewCardModalButton.addEventListener('click', () => {
       closeModal('modal-new_card', 'form-new_card');
@@ -127,8 +132,6 @@ function createNewCard() {
   if (form instanceof HTMLFormElement) {
     handleCreateNewCardFormSubmission(form);
   }
-
-  // If close button is clicked, close early
 }
 
 /**
@@ -169,3 +172,32 @@ function handleCreateNewCardFormSubmission(form) {
     console.error('Form inputs not found or not valid.');
   }
 }
+
+// Local Storage
+/**
+ *
+ */
+function saveNewCard() {}
+
+/**
+ * Loads all decks from local storage
+ * Should create a default deck on page load if it no decks exist
+ */
+function loadAllDecks() {
+  // Check if data exists in localStorage
+  const decks = localStorage.getItem('decks');
+  console.log(decks);
+
+  // If decks exist in localStorage, load them into the allDecks array
+  if (decks) {
+    allDecks.push(decks);
+    console.log('Pushing All Decks');
+  } else {
+    // If no decks exist, create a default deck and load it into the allDecks array
+    console.log('No Decks, Creating Default Deck...');
+    localStorage.setItem('decks', 'default');
+    allDecks.push('default');
+  }
+}
+
+function loadAllCards() {}
