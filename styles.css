@@ -84,6 +84,9 @@ select {
 /*-------------------
         GLOBAL
  -------------------*/
+button {
+  cursor: pointer;
+}
 
 /*-------------------
         LAYOUT

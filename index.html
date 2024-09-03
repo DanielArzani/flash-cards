@@ -4,10 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Flash Cards</title>
+
+    <!-- to remove error from firefox about favicon -->
+    <link rel="shortcut icon" href="#" type="image/x-icon" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <script src="script.js" defer></script>
   </head>
   <body>
-    <div class="modal" hidden>
-      <form>
+    <header>
+      <h1>Flash Card App</h1>
+    </header>
+    <div class="modal hidden" id="modal-new_card">
+      <form action="" class="form-new_card" id="form-new_card">
         <div>
           <label for="front-of-card">Front of Card: </label>
           <input type="text" name="front-of-card" id="front-of-card" />
@@ -17,7 +26,11 @@
           <label for="back-of-card">Back of Card: </label>
           <input type="text" name="back-of-card" id="back-of-card" />
         </div>
+
+        <button class="modal-save-btn" type="submit">Save</button>
       </form>
+
+      <button class="modal-close-btn">Close</button>
     </div>
     <button class="new-card-btn">Add a New Card</button>
 
@@ -27,12 +40,15 @@
       <div class="card card--back">Answer 1</div>
 
       <div class="controls">
-        <button>Incorrect</button>
-        <button>Re-Done</button>
-        <button>Correct</button>
+        <button class="incorrect-btn">Incorrect</button>
+        <button class="reDone-btn">Re-Done</button>
+        <button class="correct-btn">Correct</button>
       </div>
     </div>
 
-    <div class="deck-area"></div>
+    <div class="deck-area">
+      <button class="decks-btn">See Decks</button>
+      <!-- <div class="deck" id="default-deck">Default Deck</div> -->
+    </div>
   </body>
 </html>

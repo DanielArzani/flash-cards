@@ -35,3 +35,9 @@ A customizable flash card app leveraging spaced repetition to optimize long-term
 - Add support for syncing data across devices.
 - Implement a feature to import/export decks.
 - Allow users to customize the maximum review interval.
+
+## Contributing
+
+- [Every Layout](https://every-layout.dev/) by Andy Bell and Heydon Pickering
+
+---
