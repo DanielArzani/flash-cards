@@ -3,12 +3,13 @@
 //                                      SCRIPT
 //-----------------------------------------------------------------------------------------
 // Loading data from localStorage
-const allDecks = [];
-const allCards = [];
+let allDecks = []; // string[]
+let allCards = []; // {deck: string, card: {question:string, answer:string}}[]
 
 // For scoping variables
 (() => {
   loadAllDecks();
+  loadAllCards();
   initEventListeners();
 })();
 
@@ -129,8 +130,11 @@ function getAllDecks() {
 function createNewCard() {
   const form = document.querySelector('#form-new_card');
 
+  // send form data to URL
   if (form instanceof HTMLFormElement) {
     handleCreateNewCardFormSubmission(form);
+  } else {
+    console.error("This isn't a form element");
   }
 }
 
@@ -141,10 +145,12 @@ function createNewCard() {
 function handleCreateNewCardFormSubmission(form) {
   const frontInput = document.querySelector('#front-of-card');
   const backInput = document.querySelector('#back-of-card');
+  const deckSelect = document.querySelector('#all-decks');
 
   if (
     frontInput instanceof HTMLInputElement &&
-    backInput instanceof HTMLInputElement
+    backInput instanceof HTMLInputElement &&
+    deckSelect instanceof HTMLSelectElement
   ) {
     form.addEventListener(
       'submit',
@@ -154,17 +160,22 @@ function handleCreateNewCardFormSubmission(form) {
         // Get the input values
         const frontText = frontInput.value.trim();
         const backText = backInput.value.trim();
+        const selectedDeck = deckSelect.value;
 
         // Create a new URLSearchParams object and append the inputs
         const params = new URLSearchParams(window.location.search);
         params.set('front', frontText);
         params.set('back', backText);
+        params.set('deck', selectedDeck);
 
         // Update the URL with the new parameters without reloading the page
         const newUrl = `${window.location.pathname}?${params.toString()}`;
         window.history.pushState({ path: newUrl }, '', newUrl);
 
+        // Close the modal after form submission
         closeModal('modal-new_card', 'form-new_card');
+
+        saveNewCard();
       },
       { once: true }
     );
@@ -175,29 +186,75 @@ function handleCreateNewCardFormSubmission(form) {
 
 // Local Storage
 /**
- *
+ * Saves the new card to the in memory array then syncs to localStorage
  */
-function saveNewCard() {}
+function saveNewCard() {
+  // add the card data to localStorage
+  const params = getURLParams();
+  const question = params.get('front');
+  const answer = params.get('back');
+  const chosenDeck = params.get('deck');
 
-/**
- * Loads all decks from local storage
- * Should create a default deck on page load if it no decks exist
- */
-function loadAllDecks() {
-  // Check if data exists in localStorage
-  const decks = localStorage.getItem('decks');
-  console.log(decks);
+  if (question !== null && answer !== null && chosenDeck !== null) {
+    const newCard = {
+      deck: chosenDeck,
+      card: {
+        question,
+        answer,
+      },
+    };
 
-  // If decks exist in localStorage, load them into the allDecks array
-  if (decks) {
-    allDecks.push(decks);
-    console.log('Pushing All Decks');
-  } else {
-    // If no decks exist, create a default deck and load it into the allDecks array
-    console.log('No Decks, Creating Default Deck...');
-    localStorage.setItem('decks', 'default');
-    allDecks.push('default');
+    // Update the in-memory array
+    allCards.push(newCard);
+
+    // Sync the array to localStorage
+    localStorage.setItem('cards', JSON.stringify(allCards));
   }
 }
 
-function loadAllCards() {}
+/**
+ * Loads all decks from local storage
+ * Should create a default deck on page load if no decks exist
+ */
+function loadAllDecks() {
+  const decks = localStorage.getItem('decks');
+
+  if (decks) {
+    try {
+      // Attempt to parse the decks data
+      allDecks = JSON.parse(decks);
+    } catch (e) {
+      console.error('Error parsing decks data from localStorage:', e);
+      // If there's an error, initialize with the default deck
+      allDecks = ['default'];
+      localStorage.setItem('decks', JSON.stringify(allDecks));
+    }
+  } else {
+    // Initialize with a default deck if no data exists
+    allDecks = ['default'];
+    localStorage.setItem('decks', JSON.stringify(allDecks));
+  }
+}
+
+/**
+ * Loads all cards from local storage into the allCards array
+ */
+function loadAllCards() {
+  const cards = localStorage.getItem('cards');
+
+  if (cards) {
+    try {
+      // Attempt to parse the cards data
+      allCards = JSON.parse(cards);
+    } catch (e) {
+      console.error('Error parsing cards data from localStorage:', e);
+      // If there's an error, initialize with an empty array
+      allCards = [];
+      localStorage.setItem('cards', JSON.stringify(allCards));
+    }
+  } else {
+    // Initialize with an empty array if no data exists
+    allCards = [];
+    localStorage.setItem('cards', JSON.stringify(allCards));
+  }
+}
