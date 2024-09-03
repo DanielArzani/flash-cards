@@ -2,11 +2,11 @@
 //-----------------------------------------------------------------------------------------
 //                                      SCRIPT
 //-----------------------------------------------------------------------------------------
-// Loading data from localStorage
+// In Memory Array, localStorage is synced to this
 let allDecks = []; // string[]
 let allCards = []; // {deck: string, card: {question:string, answer:string}}[]
 
-// For scoping variables
+// For scoping purposes
 (() => {
   loadAllDecks();
   loadAllCards();
@@ -52,7 +52,7 @@ function initEventListeners() {
 //                                      FUNCTIONS
 //-----------------------------------------------------------------------------------------
 
-// Modals
+//^ MODALS
 /**
  * Opens a specified modal
  * Don't add the # as this function assumes an ID
@@ -98,7 +98,7 @@ function closeModal(modalID, formID) {
   }
 }
 
-// URLS
+//^ URLS
 /**
  * Returns the URL Search Parameters
  * @returns {URLSearchParams} The URL parameters object
@@ -107,7 +107,7 @@ function getURLParams() {
   return new URLSearchParams(window.location.search);
 }
 
-// Decks
+//^ DECKS
 /**
  * Gets the currently used deck.
  * Defaults to "default deck"
@@ -123,7 +123,7 @@ function getAllDecks() {
   return [];
 }
 
-// Cards
+//^ CARDS
 /**
  * Creates a new card and appends it to a deck
  */
@@ -184,7 +184,7 @@ function handleCreateNewCardFormSubmission(form) {
   }
 }
 
-// Local Storage
+//^ LOCAL STORAGE
 /**
  * Saves the new card to the in memory array then syncs to localStorage
  */
@@ -258,3 +258,32 @@ function loadAllCards() {
     localStorage.setItem('cards', JSON.stringify(allCards));
   }
 }
+
+//^ TEMPLATES
+/**
+ *
+ * @param {*} title
+ * @param {*} body
+ */
+function createCardElement(title, body) {
+  // const template = document.getElementById('card_template');
+  // const element = template.content.cloneNode(true).firstElementChild;
+  // const [cardTitle] = element.getElementsByTagName("h3");
+  // const [cardBody] = element.getElementsByTagName("section");
+  // [cardTitle.textContent, cardBody.textContent] = [title, body];
+  // return element;
+}
+// 👆
+// container.appendChild(createCardElement(
+//     "Frontend System Design: Fundamentals",
+//     "This is a random content"
+//   ))
+
+//^ BATCH INSERTS
+// const fragment = document.createDocumentFragment();
+// for (let i = 0; i < 1000; i++) {
+//   const li = document.createElement('li');
+//   li.textContent = `Item ${i}`;
+//   fragment.appendChild(li);
+// }
+// document.getElementById('myList').appendChild(fragment);

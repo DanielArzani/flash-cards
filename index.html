@@ -41,9 +41,17 @@
     <button class="new-card-btn">Add a New Card</button>
 
     <div class="play-area">
-      <div class="card card--front">Question 1</div>
+      <template id="card-front-template">
+        <div class="card card--front">
+          <p></p>
+        </div>
+      </template>
 
-      <div class="card card--back">Answer 1</div>
+      <template id="card-back-template">
+        <div class="card card--back">
+          <p></p>
+        </div>
+      </template>
 
       <div class="controls">
         <button class="incorrect-btn">Incorrect</button>
