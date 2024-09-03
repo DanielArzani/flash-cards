@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flash Cards</title>
+  </head>
+  <body>
+    <div class="modal" hidden>
+      <form>
+        <div>
+          <label for="front-of-card">Front of Card: </label>
+          <input type="text" name="front-of-card" id="front-of-card" />
+        </div>
+
+        <div>
+          <label for="back-of-card">Back of Card: </label>
+          <input type="text" name="back-of-card" id="back-of-card" />
+        </div>
+      </form>
+    </div>
+    <button class="new-card-btn">Add a New Card</button>
+
+    <div class="play-area">
+      <div class="card card--front">Question 1</div>
+
+      <div class="card card--back">Answer 1</div>
+
+      <div class="controls">
+        <button>Incorrect</button>
+        <button>Re-Done</button>
+        <button>Correct</button>
+      </div>
+    </div>
+
+    <div class="deck-area"></div>
+  </body>
+</html>
