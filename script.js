@@ -80,13 +80,24 @@ function createNewCard() {
   // send form data to URL
   if (form instanceof HTMLFormElement) {
     handleCreateNewCardFormSubmission(form);
+
+    // @ts-ignore
+    saveNewCard(allCards);
+
+    // append the new card
+    const playArea = document.querySelector('.play-area');
+
+    if (playArea instanceof HTMLDivElement) {
+      appendTemplate(playArea, frontCardTemplate, 'First Question');
+      appendTemplate(playArea, backCardTemplate, 'First Answer');
+    }
   } else {
     console.error("This isn't a form element");
   }
 }
 
+//^ FORM SUBMISSIONS
 /**
- *! This does too much, break it up. It also gets in the way of other things because of the timing of placing the event handler I have to keep adding things in here so that they can come after it
  * Handles form submission, gathers input data, and updates the URL with the form data.
  * @param {HTMLFormElement} form
  */
@@ -122,17 +133,6 @@ function handleCreateNewCardFormSubmission(form) {
 
         // Close the modal after form submission
         closeModal('modal-new_card', 'form-new_card');
-
-        // @ts-ignore
-        saveNewCard(allCards);
-
-        // append the new card
-        const playArea = document.querySelector('.play-area');
-
-        if (playArea instanceof HTMLDivElement) {
-          appendTemplate(playArea, frontCardTemplate, 'First Question');
-          appendTemplate(playArea, backCardTemplate, 'First Answer');
-        }
       },
       { once: true }
     );
